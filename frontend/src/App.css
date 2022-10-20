@@ -1,38 +1,85 @@
 .App {
-  text-align: center;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%), radial-gradient(at top center, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.40) 120%) #989898;
+  background-blend-mode: multiply,multiply;
+  overflow: hidden;
+  display: flex;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.sidebar {
+  width: 15%;
+  background: white ;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.chat {
+  width: 70%;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+}
+
+.users {
+  width: 15%;
+  background-color: aqua;
+}
+
+.sidebar-list {
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+}
+
+.sidebar-list .row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 50px;
+  padding: 0px;
+}
+
+.sidebar-list .row:hover {
+  cursor: pointer;
+}
+
+.row .channel-icon {
+  flex: 30%;
+  display: grid;
+  place-items: center;
+}
+
+.row .channel-icon svg {
+  min-height: 80%;
+  min-width: 100%;
+  object-fit: contain;
+}
+
+.row .channel-name {
+  flex: 70%;
+  display: grid;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.chat-history {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: scroll;
+  flex-grow: 1;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.chat-box {
+  display: flex;
+  height: 5%;
+  width: 100%;
+}
+
+.input-box {
+  width: 100%;
+  resize: none;
+  overflow: hidden;
+}
+
+.message {
+  padding: 5px;
 }

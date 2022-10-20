@@ -1,22 +1,46 @@
+const http = require('http');
 const express = require('express');
 const mongoose = require('mongoose');
+const socketio = require('socket.io');
 
 const app = express();
-const port = 9000;
+const server = http.createServer(app);
+const io = new socketio.Server(server, { cors: { origin: '*'}});
 
-const messageRouter = require('./routes/messages');
-
-mongoose.connect('mongodb://localhost:27017/chat-app', {
+mongoose.connect('mongodb://localhost:2717/chat-app', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-});
+}).catch(err => console.log('mongodb error'));
 
 mongoose.connection.once('open', () => {
   console.log("MongoDB database connection established succesfully");
-})
+});
 
-app.listen(port, () => {
+const port = 9000;
+server.listen(port, () => {
   console.log(`Server running on port: ${port}`);
 });
 
-app.use("/messages", messageRouter);
+let users = [];
+let channels = [];
+
+io.on('connection', socket => {
+  console.log('user connected');
+
+  // runs when a client connects
+  socket.on('user-joined', () => {
+    io.emit('user-joined', socket.id);
+  });
+
+  // runs when a client disconnects
+  socket.on('disconnect', () => {
+    io.emit('user-left', socket.id);
+  });
+
+  // runs when a user sends a message
+  socket.on('message', message => {
+    io.emit('message', message);
+    console.log(`${message.author} to ${message.channel}: ${message.content}`);
+  })
+
+})
