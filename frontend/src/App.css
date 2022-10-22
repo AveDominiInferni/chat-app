@@ -1,27 +1,29 @@
-.App {
+.chat {
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%), radial-gradient(at top center, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.40) 120%) #989898;
-  background-blend-mode: multiply,multiply;
-  overflow: hidden;
   display: flex;
+  overflow: hidden;
+  justify-content: center;
 }
 
 .sidebar {
   width: 15%;
-  background: white ;
+  padding-top: .5em;
+  background: gray ;
+  flex-grow: 1;
+  overflow-y: scroll;
+  overflow-x: clip;
 }
 
-.chat {
-  width: 70%;
+.channel {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  width: 85%;
 }
 
-.users {
-  width: 15%;
-  background-color: aqua;
+.window {
+  display: flex;
+  width: 80%;
+  flex-direction: column;
 }
 
 .sidebar-list {
@@ -64,7 +66,9 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: clip;
+  word-wrap: break-word;
   flex-grow: 1;
 }
 
@@ -74,12 +78,122 @@
   width: 100%;
 }
 
+.chat-history::-webkit-scrollbar {
+  width: 1em;
+}
+
+.chat-history::-webkit-scrollbar-track {
+  margin-block: .4em;
+  background: whitesmoke;
+  border-radius: 100vw;
+}
+
+.chat-history::-webkit-scrollbar-thumb {
+  background: #6E7271;
+  border-radius: 100vw;
+}
+
+.input {
+  display: flex;
+  align-content: stretch;
+  margin: 0.5em;
+}
+
 .input-box {
-  width: 100%;
-  resize: none;
   overflow: hidden;
+  resize: none;
+  word-wrap: break-word;
+  border-radius: 100vw;
+  flex-grow: 1;
+  padding-left: 1em;
+  padding-right: 1em;
+  background: whitesmoke;
+  padding-top: 1em;
+}
+
+.input-send {
+  width: auto;
+}
+
+.send-button {
+  height: 100%;
+  background: whitesmoke;
+  margin-left: .5em;
+  border-radius: 50%;
+  display: flex;
+  aspect-ratio: 1 / 1;
+}
+
+.send-icon {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.send-icon svg {
+  width: 60%;
+  height: auto;
 }
 
 .message {
-  padding: 5px;
+  padding: .5em;
+}
+
+.users {
+  padding-top: .5em;
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  background-color: gray;
+  overflow-y: scroll;
+  overflow-x: clip;
+  flex-grow: 1;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 0.5em;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  margin-block: .4em;
+  background: whitesmoke;
+  border-radius: 100vw;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #6E7271;
+  border-radius: 100vw;
+}
+
+.info-component {
+  display: flex;
+  flex-shrink: 0;
+  height: 5%;
+  padding: .5em;
+  margin-left: .5em;
+  margin-right: .5em;
+  border-radius: 8px;
+  transition: .4s;
+}
+
+.info-pic-component {
+  height: 100%;
+  background: whitesmoke;
+  border-radius: 50%;
+  display: flex;
+  aspect-ratio: 1 / 1;
+}
+
+.info-name-component {
+  margin-left: .5em;
+  display: flex;
+  align-items: center;
+  text-overflow: ellipsis; /*doesnt work inside flexbox ¯\_(ツ)_/¯*/
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.info-component:hover {
+  background: #6E7271;
 }

@@ -21,7 +21,7 @@ server.listen(port, () => {
   console.log(`Server running on port: ${port}`);
 });
 
-let users = [];
+let users = {};
 let channels = [];
 
 io.on('connection', socket => {
@@ -29,12 +29,14 @@ io.on('connection', socket => {
 
   // runs when a client connects
   socket.on('user-joined', () => {
-    io.emit('user-joined', socket.id);
+    io.emit('user-joined', socket.id, socket.id);
+    users[socket.id] = socket.id;
   });
 
   // runs when a client disconnects
   socket.on('disconnect', () => {
-    io.emit('user-left', socket.id);
+    io.emit('user-left', socket.id, socket.id);
+    delete users[socket.id];
   });
 
   // runs when a user sends a message

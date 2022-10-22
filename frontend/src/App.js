@@ -1,25 +1,20 @@
 import './App.css';
-import { useState, useEffect} from 'react';
-// import { Switch, Route, Link } from 'react-router-dom';
-// import Join from './components/join';
-// import Message from './components/message';
-import Navbar from './components/navbar';
-
-import Users from './components/users';
-import Sidebar from './components/sidebar';
-import Chat from './components/chat';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { io } from 'socket.io-client';
 
+import Login from './components/Login';
+import Chat from './components/Chat';
+
 const socket = io("ws://localhost:9000");
+var user = null;
 
 function App() {
-
   return (
-    <div className="App">
-      <Sidebar />
-      <Chat socket={socket}/>
-      <Users />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route exact path="/" element={<Chat socket={socket}/>}></Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

@@ -1,19 +1,16 @@
-import '../App.css';
-import { HiGlobe } from 'react-icons/hi';
+import ChannelInfo from "./ChannelInfo";
+import { useState } from "react";
 
 export default function Sidebar() {
+  const [channels, setChannels] = useState(["Global", "[DM] Ajsel Zilic"]);
+
+  const channelComponent = channels.map(el => {
+    return <ChannelInfo channelName={el} id={el} picture={""}/>
+  })
+
   return (
     <div className="sidebar">
-      <ul className="sidebar-list">
-        <li
-          key={"global"}
-          className="row"
-          onClick={() => console.log("global pressed")}
-        >
-          <div className="channel-icon"><HiGlobe /></div>
-          <div className="channel-name">Global</div>
-        </li>
-      </ul>
+      {channelComponent}
     </div>
   );
 }
