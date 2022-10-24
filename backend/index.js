@@ -23,14 +23,9 @@ server.listen(port, () => {
 
 });
 
-const getUsername = (id) => {
-  for (let i = 0; i < users.length; i++)
-    if (users[i].id == id)
-      return users[i].username;
-}
-
 var users = [];
-var channels = ["Global"];
+var globalObject = {channelName: "Global", messages: []};
+var channels = [];
 
 io.on('connection', socket => {
   let socketId = socket.id;
@@ -41,11 +36,11 @@ io.on('connection', socket => {
   users.push({ id: socketId, username });
   io.emit('user-joined', socketId, username);
 
-  socket.emit('sync', users);
+  socket.emit('sync', users, globalObject);
 
   // runs when a client disconnects
   socket.on('disconnect', () => {
-    io.emit('user-left', socketId, getUsername(socketId));
+    io.emit('user-left', socketId);
     for (let i = 0; i < users.length; i++) {
       if (users[i].id == socketId) {
         users.splice(i);
@@ -63,5 +58,16 @@ io.on('connection', socket => {
       " " + ("0" + dateObject.getHours()).slice(-2) +
       ":" + ("0" + dateObject.getMinutes()).slice(-2);
     io.emit('message', message);
+    
+    // cache messages in global channel
+    globalObject.messages.push({
+      author: message.author,
+      content: message.content, 
+      time: message.time
+    });
   })
 })
+
+// store messages of dms
+// store global messages in db
+// pagination

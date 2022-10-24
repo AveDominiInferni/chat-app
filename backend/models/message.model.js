@@ -8,9 +8,11 @@ const messageSchema = new mongoose.Schema({
     message: {
         type: String,
         required: true,
-    }
-}, {
-    timestamps: true
+    },
+    time: {
+        type: String,
+        required: true,
+    },
 });
 
 const Message = mongoose.model('Messaage', messageSchema);

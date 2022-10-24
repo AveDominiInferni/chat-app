@@ -1,20 +1,13 @@
 import { useState, useEffect, useCallback, useContext } from "react";
 import Message from "./Message";
 import { BiSend } from 'react-icons/bi';
-import { SocketContext } from "./SocketContext";
-import { UsersContext } from "./UsersContext";
+import { SocketContext } from "../App";
+import { UsersContext } from "../App";
 
-export default function Chat() {
+export default function Chat({ messages, setMessages, setChannels, activeChannel, setActiveChannel }) {
   const { socket } = useContext(SocketContext);
   const { users, setUsers } = useContext(UsersContext);
   const [messageContent, setMessageContent] = useState("");
-  const [messages, setMessages] = useState([]);
-
-  const getUsername = (id) => {
-    for (let i = 0; i < users.length; i++)
-      if (users[i].id == id)
-        return users[i].username;
-  }
 
   // snap to ref of my message when i send it
   const setRef = useCallback(node => {
@@ -34,43 +27,35 @@ export default function Chat() {
     });
     // runs when a new user joins the channel
     socket.on('user-joined', (id, username) => {
-      setMessages(prevMessages => prevMessages.concat(
-        {
-          author: `${username} has joined`,
-        }
-      ));
-      setUsers(prevUsers => prevUsers.concat({ id, username }))
+      setMessages(prevMessages => prevMessages.concat({ author: `${username} has joined` }));
+      setUsers(prevUsers => prevUsers.concat({ id, username }));
     });
 
-    // runs when a user leaves the channel
-    socket.on('user-left', (id, username) => {
-      setMessages(prevMessages => prevMessages.concat(
-        {
-          author: `${username} has left`,
-        }
-      ));
-      setUsers(prevUsers => prevUsers.filter((el => el.id != id)))
-    });
+    
 
     return () => {
       socket.off('message');
       socket.off('user-joined');
-      socket.off('user-left');
-    };
+    }
   }, []);
+
+  const getUsername = (id) => {
+    for (let i = 0; i < users.length; i++)
+      if (users[i].id != id)
+        return users[i].username;
+  }
 
   const sendMessage = async () => {
     if (messageContent != "") {
       const message = {
-        // author: username,
         author: getUsername(socket.id),
-        // channel: channel,
         channel: "global",
         content: messageContent
       }
       socket.emit('message', message);
       setMessageContent("");
     }
+    console.log(activeChannel);
   }
 
   const messageComponents = messages.map((el, index) => {
@@ -83,7 +68,7 @@ export default function Chat() {
   });
 
   // dummy ref to last message
-  // messageComponents.push(<div ref={setRef}></div>);
+  messageComponents.push(<div ref={setRef}></div>);
 
   return (
     <div className="chat">

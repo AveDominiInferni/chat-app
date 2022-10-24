@@ -1,36 +1,44 @@
 .App {
   width: 100vw;
   height: 100vh;
-  display: flex;
-  flex-direction: column;
+  min-width: 20rem;
   overflow: hidden;
 }
 
 .navbar {
+  position: relative;
+  z-index: 100;
   height: 3em;
   display: flex;
   flex-shrink: 0;
   background: #6E7271;
+  text-align: left;
+  box-shadow: 0px 4px 6px -6px black;
 }
 
 .body {
-  height: 93%;
+  height: 100%;
+  margin-top: -3em;
   display: flex;
+  place-content: stretch;
 }
 
 .sidebar {
-  padding-top: .5em;
-  width: 15em;
+  padding-top: .5rem;
+  width: 15rem;
+  margin-top: 3rem;
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
   background-color: gray;
   overflow-y: scroll;
   overflow-x: clip;
-  flex-grow: 0;
-  flex-shrink: 0;
+  transition: .4s;
 }
 
 .chat {
+  margin-top: 3em;
+  max-height: 100%;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -63,10 +71,11 @@
 }
 
 .input {
+  height: 3rem;
   display: flex;
   align-content: stretch;
   flex-shrink: 0;
-  margin: 0.5em;
+  padding: .5em;
 }
 
 .input-box {
@@ -87,12 +96,12 @@
 }
 
 .send-button {
-  height: 100%;
+  height: 3rem;
+  width: 3rem;
   background: whitesmoke;
   margin-left: .5em;
   border-radius: 50%;
   display: flex;
-  aspect-ratio: 1 / 1;
 }
 
 .send-icon {
@@ -102,7 +111,7 @@
   place-items: center;
 }
 
-.send-icon svg {
+svg {
   width: 60%;
   height: auto;
 }
@@ -143,7 +152,7 @@
 .info-component {
   display: flex;
   flex-shrink: 0;
-  height: 5%;
+  height: 2rem;
   padding: .5em;
   margin-left: .5em;
   margin-right: .5em;
@@ -152,14 +161,16 @@
 }
 
 .info-pic-component {
-  height: 100%;
+  pointer-events: none;
+  height: 2rem;
+  width: 2rem;
   background: whitesmoke;
   border-radius: 50%;
   display: flex;
-  aspect-ratio: 1 / 1;
 }
 
 .info-name-component {
+  pointer-events: none;
   margin-left: .5em;
   display: flex;
   align-items: center;
@@ -170,26 +181,36 @@
 
 .info-component:hover {
   background: #6E7271;
+  cursor: pointer;
 }
 
 @media only screen and (max-width: 768px) {
+
+}
+
+@media only screen and (orientation: landscape) and (min-width: 768px) {
   .sidebar, .navbar-left, .navbar-right{
-    display: none;
+    display: flex;
+  }
+  .body, .navbar {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
   }
 }
 
-.navbar-left {
-  width: 15em;
+.navbar-left, .navbar-right {
+  width: 15rem;
   flex-grow: 0;
+  display: grid;
+  align-items: center;
+  margin-left: 1rem;
+  margin-right: -1rem;
+  font-size: large;
 }
 
 .navbar-middle {
   flex-grow: 1;
-}
-
-.navbar-right {
-  width: 15em;
-  flex-grow: 0;
+  flex-shrink: 0;
 }
 
 .author-body {
@@ -199,9 +220,33 @@
 }
 
 .author-pic {
-  height: 100%;
+  height: 3rem;
+  width: 3rem;
   background: black;
   border-radius: 50%;
   display: flex;
-  aspect-ratio: 1 / 1;
+}
+
+.send-icon:hover {
+  cursor: pointer;
+}
+
+.navbar-middle {
+  display: flex;
+  justify-content: space-between;
+}
+
+.channels-button, .users-button {
+  height: 3rem;
+  width: 3rem;
+  background: none;
+  border: none;
+  margin: none;
+  padding: 0;
+  display: grid;
+  place-items: center;
+}
+
+.channels-button, .users-button:hover {
+  cursor: pointer;
 }
