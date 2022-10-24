@@ -1,26 +1,32 @@
-import ChannelInfo from "./ChannelInfo";
-import { useState } from "react";
 
-export default function Channels({ channels, activeChannel, setActiveChannel }) {
-  const activeStyle = { "background": "#6E7271" };
-  const handleClick = (id) => {
-    console.log(id, activeChannel);
-    setActiveChannel(id);
+
+export default function Channels({ channels, activeChannel, setActiveChannel, unread, setUnread }) {
+  const handleClick = (name) => {
+    setActiveChannel(name);
+    if (unread.indexOf(name) != -1) unread.splice(name, 1);
+  }
+  const activeStyle = {"background" : "#C73E1D"};
+  const unreadStyle = {"background" : "#BDB246"};
+  const defaultStyle = {"background" : "#1F1E1E"};
+
+  var channelComponents = [];
+  try {
+    for (const [key, value] of channels) {
+      channelComponents.push(
+        <div className="user-info info-component"
+          key={key}
+          onClick={() => handleClick(key)}
+          style={ activeChannel == key ? activeStyle : (unread.indexOf(key) != -1 ? unreadStyle : defaultStyle) }
+        >
+          <div className="user-pic info-pic-component"></div>
+          <div className="username info-name-component">{key}</div>
+        </div >
+      );
+    }
+  } catch (err) {
+
   }
 
-  const channelComponents = channels.map((el, index) => {
-    return (
-      <div className="user-info info-component"
-        key={index}
-        onClick={() => handleClick(el.id)}
-        style={activeChannel == el.id ? activeStyle : null}
-      >
-        <div className="user-pic info-pic-component"></div>
-        <div className="username info-name-component">{el.username}</div>
-      </div >
-    )
-
-  });
 
   return (
     <div className="channels sidebar">
