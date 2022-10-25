@@ -1,6 +1,5 @@
 const http = require('http');
 const express = require('express');
-const mongoose = require('mongoose');
 const socketio = require('socket.io');
 const { generateUsername } = require('./username-gen');
 
