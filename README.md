@@ -1,8 +1,9 @@
 <h1>chat-app</h1>
-<h2>How to run as Docker contaienr<h2>
+Full stack React chat app with a Node.js and Express backend.
+<h3>How to run as Docker contaienr<h3>
  
 ```
- # Clone the repository
+# Clone the repository
 git clone https://github.com/AveDominiInferni/chat-app
 
 # Go inside the directory
