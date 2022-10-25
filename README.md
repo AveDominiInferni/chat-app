@@ -11,4 +11,6 @@ cd chat-app
 
 # Run docker-compose
 docker-compose up
+ 
+# The app is up on http://localhost:3000/
 ```
