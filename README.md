@@ -9,3 +9,4 @@ cd chat-app
 
 # Run docker-compose
 docker-compose up
+ ```
