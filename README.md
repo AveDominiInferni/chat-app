@@ -14,5 +14,5 @@ cd chat-app
 docker-compose up
 ```
  
-The should be up on http://localhost:3000/
+The app should be up on http://localhost:3000/
  
