@@ -1,17 +1,11 @@
-import { useState, useCallback, useContext, useReducer, useRef } from "react";
+import { useState, useCallback, useContext } from "react";
 import Message from "./Message";
 import { BiSend } from 'react-icons/bi';
 import { SocketContext } from "../App";
-import { UsersContext } from "../App";
 
-export default function Chat({ myUsername, channels, setChannels, activeChannel, setActiveChannel }) {
+export default function Chat({ myUsername, channels, activeChannel }) {
   const { socket } = useContext(SocketContext);
   const [messageContent, setMessageContent] = useState();
-
-  // snap to ref of my message when i send it
-  const setRef = useCallback(node => {
-    if (node) node.scrollIntoView({ smooth: true });
-  }, []);
 
   const sendMessage = async () => {
     if (messageContent != "") {
@@ -49,12 +43,6 @@ export default function Chat({ myUsername, channels, setChannels, activeChannel,
   } catch (err) {
 
   }
-
-  // dummy ref to last message
-  try {
-    if (channels.get(activeChannel)[channels.get(activeChannel).length - 1].author == myUsername)
-      messageComponents.push(<div ref={setRef}></div>);
-  } catch (err) { }
 
   return (
     <div className="chat">
